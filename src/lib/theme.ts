@@ -1,5 +1,5 @@
 import { Dimensions } from "react-native";
-// import type { DeepPartial, Theme } from "stream-chat-expo";
+import type { DeepPartial, Theme } from "stream-chat-expo";
 
 const { width } = Dimensions.get("window");
 const vw = (percent: number) => (width * percent) / 100;
@@ -37,7 +37,7 @@ export const COLORS = {
   accentSecondary: "#00B894",
 };
 
-/* export const studyBuddyTheme: DeepPartial<Theme> = {
+export const yapzo: DeepPartial<Theme> = {
   colors: {
     targetedMessageBackground: "transparent",
     grey_dark: COLORS.text,
@@ -462,4 +462,4 @@ export const COLORS = {
       },
     },
   },
-}; */
+};

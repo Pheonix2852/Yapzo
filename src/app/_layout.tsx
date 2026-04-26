@@ -1,15 +1,18 @@
 import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import * as Sentry from "@sentry/react-native";
+import Constants from "expo-constants";
 import { useFonts } from "expo-font";
 import "react-native-gesture-handler";
 
 import { SplashScreen, Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { useEffect } from "react";
+import StreamUserSync from "@/src/components/StreamUserSync";
+import { ReactNode, useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../../global.css";
+import { AppProvider } from "../context/AppProvider";
 
 export default function RootLayout() {
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
@@ -32,6 +35,8 @@ export default function RootLayout() {
 
   if (!fontsLoaded) return null;
 
+  const isExpoGo = Constants.executionEnvironment === "storeClient";
+
   Sentry.init({
     dsn: "https://b635d127cfbc83f0a631f5de1baa4efa@o4509574816137216.ingest.de.sentry.io/4511281766465616",
 
@@ -50,16 +55,28 @@ export default function RootLayout() {
     // uncomment the line below to enable Spotlight (https://spotlightjs.com)
     // spotlight: __DEV__,
   });
+  let content: ReactNode = (
+    <AppProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+    </AppProvider>
+  );
+
+  if (!isExpoGo) {
+    const ChatWrapper = require("../components/chatWrapper").default;
+    content = <ChatWrapper>{content}</ChatWrapper>;
+  }
+
   return (
     <SafeAreaProvider>
-      <GestureHandlerRootView className="flex-1">
-        <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="(tabs)" />
-          </Stack>
-        </ClerkProvider>
-      </GestureHandlerRootView>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+        <GestureHandlerRootView className="flex-1">
+          <StreamUserSync />
+          {content}
+        </GestureHandlerRootView>
+      </ClerkProvider>
     </SafeAreaProvider>
   );
 }
