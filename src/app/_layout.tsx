@@ -2,10 +2,13 @@ import { ClerkProvider } from "@clerk/expo";
 import { tokenCache } from "@clerk/expo/token-cache";
 import * as Sentry from "@sentry/react-native";
 import { useFonts } from "expo-font";
+import "react-native-gesture-handler";
+
 import { SplashScreen, Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../../global.css";
 
 export default function RootLayout() {
@@ -49,12 +52,14 @@ export default function RootLayout() {
   });
   return (
     <SafeAreaProvider>
-      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(tabs)" />
-        </Stack>
-      </ClerkProvider>
+      <GestureHandlerRootView className="flex-1">
+        <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </ClerkProvider>
+      </GestureHandlerRootView>
     </SafeAreaProvider>
   );
 }
