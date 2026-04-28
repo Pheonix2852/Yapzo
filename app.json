@@ -54,6 +54,14 @@
         }
       ],
       [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24
+          }
+        }
+      ],
+      [
         "expo-font",
         {
           "fonts": [
@@ -74,7 +82,18 @@
           "organization": "sagnik-9z"
         }
       ],
-      "expo-audio"
+      "expo-audio",
+      [
+        "@stream-io/video-react-native-sdk",
+        [
+          "@config-plugins/react-native-webrtc",
+          {
+            // add your explanations for camera and microphone
+            "cameraPermission": "$(PRODUCT_NAME) requires camera access in order to capture and transmit video",
+            "microphonePermission": "$(PRODUCT_NAME) requires microphone access in order to capture and transmit audio"
+          }
+        ]
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
