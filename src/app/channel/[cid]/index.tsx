@@ -1,4 +1,3 @@
-import CustomMessageComposer from "@/src/components/CustomMessageComposer";
 import EmptyState from "@/src/components/EmptyState";
 import FullScreenLoader from "@/src/components/FullScreenLoader";
 import { useAppContext } from "@/src/context/AppProvider";
@@ -10,7 +9,7 @@ import { useNavigation, useRouter } from "expo-router";
 import React, { useLayoutEffect, useMemo } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Channel, MessageList, useChatContext } from "stream-chat-expo";
+import { Channel, MessageInput, MessageList, useChatContext } from "stream-chat-expo";
 
 const ChannelScreen = () => {
   const { channel, setThread } = useAppContext();
@@ -89,25 +88,46 @@ const ChannelScreen = () => {
   }
 
   return (
-    <View className="flex-1 bg-surface">
-      <Channel channel={channel} keyboardVerticalOffset={headerHeight}>
-        <View className="flex-1">
-          {channel.state.messages.length === 0 ? (
+    <View className="flex-1 bg-border">
+      <Channel
+        channel={channel}
+        keyboardVerticalOffset={headerHeight}
+        EmptyStateIndicator={() => (
+          <View className="flex-1 items-center justify-center px-5">
             <EmptyState icon="chatbubbles" title="No messages yet" subtitle="Start a conversation!" />
-          ) : (
-            <MessageList
-              onThreadSelect={(thread) => {
-                if (!thread) return;
+          </View>
+        )}
+        messageActions={({
+          copyMessage,
+          deleteForMeMessage,
+          deleteMessage,
+          editMessage,
+          markUnread,
+          pinMessage,
+          quotedReply,
+          unpinMessage,
+        }) =>
+          [
+            editMessage,
+            quotedReply,
+            copyMessage,
+            pinMessage,
+            unpinMessage,
+            markUnread,
+            deleteForMeMessage,
+            deleteMessage,
+          ].filter((action): action is NonNullable<typeof action> => Boolean(action))
+        }
+      >
+        <MessageList
+          onThreadSelect={(thread) => {
+            setThread(thread);
+            router.push(`/channel/${channel.cid}/thread/${thread?.cid}`);
+          }}
+        />
 
-                setThread(thread);
-                router.push(`/channel/${channel.id}/thread/${thread.id}`);
-              }}
-            />
-          )}
-        </View>
-
-        <View className="bg-surface">
-          <CustomMessageComposer />
+        <View className="pb-5 bg-surface">
+          <MessageInput audioRecordingEnabled />
         </View>
       </Channel>
     </View>

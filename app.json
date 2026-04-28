@@ -29,6 +29,19 @@
     "plugins": [
       "expo-router",
       [
+        "expo-image-picker",
+        {
+          "cameraPermission": "$(PRODUCT_NAME) would like to use your camera to share image in message",
+          "photoLibraryPermission": "$(PRODUCT_NAME) would like to access your photo library to share image in message"
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "$(PRODUCT_NAME) would like to access your microphone to share audio in message"
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
@@ -60,7 +73,8 @@
           "project": "yapzo",
           "organization": "sagnik-9z"
         }
-      ]
+      ],
+      "expo-audio"
     ],
     "experiments": {
       "typedRoutes": true,
