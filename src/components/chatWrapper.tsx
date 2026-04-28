@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/expo";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useRef } from "react";
 import { Chat, OverlayProvider, useCreateChatClient } from "stream-chat-expo";
 import { yapzo } from "../lib/theme";
 import FullScreenLoader from "./FullScreenLoader";
@@ -36,6 +36,9 @@ const syncUserToStream = async (user: SyncableUser) => {
 
 const ChatClient = ({ children, user }: { children: ReactNode; user: SyncableUser }) => {
   const syncedRef = useRef(false);
+  const userDisplayName = useMemo(() => getUserDisplayName(user), [user]);
+  const userImage = useMemo(() => user.imageUrl ?? undefined, [user.imageUrl]);
+
   useEffect(() => {
     // needed cuz so that the method isn't run twice
     if (!syncedRef.current) {
@@ -44,7 +47,7 @@ const ChatClient = ({ children, user }: { children: ReactNode; user: SyncableUse
     }
   }, [user]);
 
-  const tokenProvider = async () => {
+  const tokenProvider = useCallback(async () => {
     const response = await fetch("/api/token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,15 +61,20 @@ const ChatClient = ({ children, user }: { children: ReactNode; user: SyncableUse
 
     const data = await response.json();
     return data.token;
-  };
+  }, [user.id]);
+
+  const userData = useMemo(
+    () => ({
+      id: user.id,
+      name: userDisplayName,
+      image: userImage,
+    }),
+    [user.id, userDisplayName, userImage],
+  );
 
   const chatClient = useCreateChatClient({
     apiKey: STREAM_API_KEY,
-    userData: {
-      id: user.id,
-      name: getUserDisplayName(user),
-      image: user.imageUrl ?? undefined,
-    },
+    userData,
     tokenOrProvider: tokenProvider,
   });
 

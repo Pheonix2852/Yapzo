@@ -52,6 +52,14 @@ export default function RootLayout() {
     replaysOnErrorSampleRate: 1,
     integrations: [Sentry.mobileReplayIntegration(), Sentry.feedbackIntegration()],
 
+    beforeSend(event) {
+      // Filter out non-critical keep-awake errors from native modules
+      if (event.message?.includes("keep awake") || event.exception?.values?.[0]?.value?.includes("keep awake")) {
+        return null;
+      }
+      return event;
+    },
+
     // uncomment the line below to enable Spotlight (https://spotlightjs.com)
     // spotlight: __DEV__,
   });

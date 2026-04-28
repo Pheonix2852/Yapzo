@@ -68,6 +68,11 @@ const Chat = () => {
           additionalFlatListProps={{
             contentContainerStyle: { flexGrow: 1 },
           }}
+          EmptyStateIndicator={() => (
+            <View>
+              <Text className="flex-1 text-white">Start Chatting</Text>
+            </View>
+          )}
         />
       ) : (
         <View className="mx-5 mt-3 rounded-xl border border-border bg-surface p-4">
