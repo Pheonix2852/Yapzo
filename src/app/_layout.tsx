@@ -9,6 +9,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import StreamUserSync from "@/src/components/StreamUserSync";
+import VideoProvider from "@/src/components/VideoProvider";
 import { ReactNode, useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../../global.css";
@@ -63,7 +64,7 @@ export default function RootLayout() {
     // uncomment the line below to enable Spotlight (https://spotlightjs.com)
     // spotlight: __DEV__,
   });
-  let content: ReactNode = (
+  const appContent = (
     <AppProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(auth)" />
@@ -72,9 +73,16 @@ export default function RootLayout() {
     </AppProvider>
   );
 
+  let content: ReactNode = appContent;
+
+  // Only wrap with ChatWrapper and VideoProvider in dev client, not in Expo Go
   if (!isExpoGo) {
-    const ChatWrapper = require("../components/chatWrapper").default;
-    content = <ChatWrapper>{content}</ChatWrapper>;
+    const ChatWrapperComponent = require("../components/chatWrapper").default;
+    content = (
+      <ChatWrapperComponent>
+        <VideoProvider>{content}</VideoProvider>
+      </ChatWrapperComponent>
+    );
   }
 
   return (

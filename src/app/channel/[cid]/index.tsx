@@ -73,7 +73,10 @@ const ChannelScreen = () => {
       headerRight: () => (
         <TouchableOpacity
           onPress={() => {
-            //implement call
+            router.push({
+              pathname: "/call/[callId]",
+              params: { callId: channel?.id! },
+            });
           }}
           className="mr-3 items-center justify-center"
         >

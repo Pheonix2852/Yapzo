@@ -20,7 +20,7 @@ const useStartChat = ({ client, userId, setChannel, setCreating }: useStartChatP
       await channel.watch();
 
       setChannel(channel);
-      //router.push(`/channel/${channel.cid}`);
+      router.push(`/channel/${channel.id}`);
     } catch (error) {
       console.error("Error creating chat:", error);
       Alert.alert("Error", "Could not create chat. Please try again.");
