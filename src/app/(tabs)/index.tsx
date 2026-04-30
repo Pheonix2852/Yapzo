@@ -4,9 +4,10 @@ import { getGreetingForHour } from "@/src/lib/utils";
 import { useUser } from "@clerk/expo";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { Channel } from "stream-chat";
 
@@ -32,54 +33,123 @@ const Chat = () => {
 
   const ChannelListComponent = !isExpoGo ? require("stream-chat-expo").ChannelList : null;
 
+  const ListHeaderComponent = (
+    <View>
+      {/* Header Section */}
+      <View className="px-6 pt-6 pb-4">
+        <View className="flex-row items-center justify-between mb-1">
+          <View>
+            <Text className="text-xs text-primary-light font-sans-medium uppercase tracking-wider mb-1">
+              {getGreetingForHour()}
+            </Text>
+            <Text className="text-2xl font-sans-bold text-foreground-muted">
+              Welcome back, <Text className="text-primary">{firstName}</Text>
+            </Text>
+          </View>
+
+          <Pressable onPress={() => router.push("/(tabs)/profile")}>
+            <View className="w-10 h-10 rounded-full bg-primary/20 items-center justify-center border border-primary/30 overflow-hidden">
+              {user?.imageUrl ? (
+                <Image
+                  source={user?.imageUrl}
+                  style={{ width: 40, height: 40, borderRadius: 40 }}
+                  contentFit="contain"
+                />
+              ) : (
+                <Ionicons name="person" size={20} color={COLORS.primary} />
+              )}
+            </View>
+          </Pressable>
+        </View>
+      </View>
+
+      {/* Search Bar */}
+      <View className="px-4 mb-4">
+        <View className="flex-row items-center bg-surface px-4 py-1 rounded-2xl gap-3 border border-border shadow-lg shadow-black/20">
+          <View className="w-8 h-8 rounded-full bg-primary/10 items-center justify-center">
+            <Ionicons name="search" size={18} color={COLORS.primary} />
+          </View>
+          <TextInput
+            placeholder="Search conversations..."
+            placeholderTextColor={COLORS.textMuted}
+            value={search}
+            onChangeText={setSearch}
+            style={{
+              flex: 1,
+              height: 50,
+              fontSize: 15,
+              paddingVertical: 0,
+              lineHeight: 22,
+              color: COLORS.textMuted,
+              textAlignVertical: "center",
+            }}
+          />
+          {search.length > 0 && (
+            <Ionicons name="close-circle" size={20} color={COLORS.textMuted} onPress={() => setSearch("")} />
+          )}
+        </View>
+      </View>
+
+      {/* Section Header */}
+      <View className="flex-row items-center justify-between px-6 mb-4">
+        <View className="flex-row items-center gap-2.5">
+          <View className="w-8 h-8 rounded-xl bg-primary/20 items-center justify-center border border-primary/30">
+            <Ionicons name="chatbubbles" size={18} color={COLORS.textMuted} />
+          </View>
+          <Text className="text-base text-foreground-muted font-sans-bold text-text">Conversations</Text>
+        </View>
+        <View className="flex-row items-center gap-1.5 bg-surface px-3 py-1.5 rounded-full border border-border">
+          <View className="w-2 h-2 rounded-full bg-success" />
+          <Text className="text-xs font-sans-medium text-foreground">Active</Text>
+        </View>
+      </View>
+    </View>
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-background">
-      <View className="px-5 pt-3 pb-2">
-        <Text className="text-sm text-foreground-muted font-sans-medium">
-          {getGreetingForHour()}, {firstName}
-        </Text>
-      </View>
-
-      <View className="flex-row items-center bg-surface mx-5 mb-3 px-3.5 py-3 rounded-[14px] gap-2.5 border border-border">
-        <Ionicons name="search" size={18} color={COLORS.textMuted} />
-        <TextInput
-          placeholder="Search for Friends"
-          placeholderTextColor={COLORS.textMuted}
-          value={search}
-          onChangeText={setSearch}
-        />
-      </View>
-
-      <View className="flex-row items-center px-5 my-1.5 gap-2">
-        <Ionicons name="chatbubbles" size={16} color={COLORS.primaryLight} />
-        <Text className="text-[15px] font-sans-medium text-primary-light">Your Friends</Text>
-      </View>
-
       {ChannelListComponent ? (
         <ChannelListComponent
           filters={filters}
-          options={{ state: true, watch: true }} //state true will fetch  initial full data of channel and watch true will keep the channel updated in realtime
+          options={{ state: true, watch: true }}
           sort={{ last_updated: -1 }}
           channelRenderFilterFn={channelRenderFilterFn}
           onSelect={(channel: Channel) => {
             setChannel(channel);
             router.push(`/channel/${channel.id}`);
           }}
+          ListHeaderComponent={ListHeaderComponent}
           additionalFlatListProps={{
             contentContainerStyle: { flexGrow: 1 },
+            showsVerticalScrollIndicator: false,
           }}
           EmptyStateIndicator={() => (
-            <View>
-              <Text className="flex-1 text-white">Start Chatting</Text>
+            <View className="flex-1 items-center justify-center py-16 px-6">
+              <View className="w-20 h-20 rounded-full bg-surface items-center justify-center border border-border mb-4">
+                <Ionicons name="chatbubbles-outline" size={36} color={COLORS.textMuted} />
+              </View>
+              <Text className="text-lg font-sans-bold text-text mb-2">No conversations yet</Text>
+              <Text className="text-sm text-textMuted text-center font-sans-medium">
+                Start a new conversation to connect with your friends
+              </Text>
             </View>
           )}
         />
       ) : (
-        <View className="mx-5 mt-3 rounded-xl border border-border bg-surface p-4">
-          <Text className="text-sm font-sans-medium text-foreground-muted">
-            Stream chat UI is unavailable in Expo Go. Use a development build to see channels.
-          </Text>
-        </View>
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+          {ListHeaderComponent}
+          <View className="mx-6 mt-4 rounded-2xl border border-border bg-surface p-6 shadow-lg shadow-black/20">
+            <View className="flex-row items-center gap-3 mb-3">
+              <View className="w-10 h-10 rounded-full bg-primary/20 items-center justify-center">
+                <Ionicons name="information-circle" size={22} color={COLORS.primary} />
+              </View>
+              <Text className="text-base font-sans-bold text-text flex-1">Development Build Required</Text>
+            </View>
+            <Text className="text-sm font-sans-medium text-textMuted leading-5">
+              Stream chat UI requires a development build. Build your app to see the full channel list experience.
+            </Text>
+          </View>
+        </ScrollView>
       )}
     </SafeAreaView>
   );
