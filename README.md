@@ -1,50 +1,53 @@
-# Welcome to your Expo app 👋
+![Project Cover](assets/Mockup.png)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Yapzo
 
-## Get started
+**A modern, Expo‑based React Native app** that combines **Stream Chat** and **Stream Video** with **Clerk** authentication, delivering a seamless social‑messaging and video‑calling experience.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 What the Project Does
 
-2. Start the app
+Yapzo provides a mobile‑first platform where users can:
 
-   ```bash
-   npx expo start
-   ```
+- Sign in with Clerk and instantly see their profile avatar.
+- Browse a tab‑based interface for exploring chats, profiles, and settings.
+- Send and receive real‑time chat messages via Stream Chat.
+- Initiate and join high‑quality video calls using Stream Video.
+- Enjoy a polished UI built with **NativeWind** and a consistent orange‑themed design.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🛠 Tech Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Frontend**: React Native (Expo SDK 54), NativeWind/Tailwind, TypeScript
+- **Authentication**: Clerk (`useUser` hook)
+- **Chat & Video**: Stream Chat SDK, Stream Video React Native SDK
+- **State Management**: React Context (`src/context/AppProvider.tsx`)
+- **Styling**: Tailwind CSS, custom theme (`src/lib/theme.ts`)
+- **Build & Dev**: Expo CLI, Metro bundler, EAS for builds
+- **Testing / Linting**: ESLint, Jest
+- **Version Control**: Git
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## ✨ Features
 
-```bash
-npm run reset-project
-```
+- **Clerk authentication** with avatar display on the home screen.
+- **Tab navigation** (Explore, Profile, etc.) using Expo router.
+- **Real‑time chat** powered by Stream Chat, including message composer and attachment handling.
+- **Video calling** with incoming/outgoing call screens and Stream Video integration.
+- **Themed UI** – custom orange palette defined in `src/lib/theme.ts` and applied across components.
+- **Responsive design** via NativeWind utilities.
+- **Hot‑reload friendly** development workflow (Expo Go, Metro bundler).
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 💡 Why This Project is Useful
 
-To learn more about developing your project with Expo, look at the following resources:
+Yapzo showcases how to combine **authentication**, **real‑time messaging**, and **video calling** in a single React Native app, making it an excellent reference for developers building social or collaboration platforms. It demonstrates best practices for:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Managing multiple SDKs (Clerk, Stream) together.
+- Structuring a scalable codebase with clear context providers.
+- Applying a consistent design system using Tailwind and a custom theme.
+- Leveraging Expo’s tooling for rapid iteration.

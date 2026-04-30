@@ -1,12 +1,12 @@
 import ErrorCallUI from "@/src/components/ErrorCallUI";
+import { IncomingCallScreen } from "@/src/components/IncomingCallScreen";
+import { OutgoingCallScreen } from "@/src/components/OutgoingCallScreen";
 import { useAppContext } from "@/src/context/AppProvider";
 import { COLORS } from "@/src/lib/theme";
 import {
   Call,
   CallContent,
   CallingState,
-  IncomingCall,
-  OutgoingCall,
   StreamCall,
   useCall,
   useCallStateHooks,
@@ -92,6 +92,7 @@ const CallScreen = () => {
 function CallUI() {
   const call = useCall();
   const router = useRouter();
+
   const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
 
@@ -104,7 +105,7 @@ function CallUI() {
   if ([CallingState.RINGING, CallingState.JOINING, CallingState.IDLE].includes(callingState)) {
     return (
       <SafeAreaView className="flex-1 bg-background">
-        {isCallCreatedByMe ? <OutgoingCall /> : <IncomingCall />}
+        {isCallCreatedByMe ? <OutgoingCallScreen /> : <IncomingCallScreen />}
       </SafeAreaView>
     );
   }
@@ -112,10 +113,10 @@ function CallUI() {
   return (
     <SafeAreaView className="flex-1 bg-background" edges={["bottom"]}>
       <CallContent
+        layout="spotlight"
         onHangupCallHandler={async () => {
           await call?.endCall();
         }}
-        layout="spotlight"
       />
     </SafeAreaView>
   );
