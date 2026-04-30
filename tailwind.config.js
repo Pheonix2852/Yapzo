@@ -6,28 +6,28 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#6C5CE7",
-        "primary-dark": "#5A4BD1",
-        "primary-light": "#A29BFE",
+        primary: "#FF6A00",
+        "primary-dark": "#E65C00",
+        "primary-light": "#FFA24D",
 
-        background: "#0F0E17",
-        surface: "#1A1A2E",
-        "surface-dark": "#0F0E17",
-        "surface-light": "#16213E",
+        background: "#140A00",
+        surface: "#1F1208",
+        "surface-dark": "#140A00",
+        "surface-light": "#2A180C",
 
-        foreground: "#FFFFFE",
-        "foreground-muted": "#A7A9BE",
-        "foreground-subtle": "#72757E",
+        foreground: "#FFF8F2",
+        "foreground-muted": "#D9B8A0",
+        "foreground-subtle": "#9A7B66",
 
-        accent: "#FF6B6B",
-        "accent-secondary": "#00B894",
+        accent: "#FF8C42",
+        "accent-secondary": "#FFC857",
 
-        success: "#00B894",
-        warning: "#FDCB6E",
-        danger: "#FF6B6B",
+        success: "#22C55E",
+        warning: "#F59E0B",
+        danger: "#FF5C5C",
 
-        border: "#232946",
-        "border-light": "#2E3354",
+        border: "#3A2414",
+        "border-light": "#4A2E1A",
       },
       fontFamily: {
         sans: ["GoogleSans-Regular"],

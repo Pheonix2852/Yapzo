@@ -13,8 +13,8 @@ const AuthScreen = () => {
     <View className="flex-1 bg-background">
       <View className="absolute inset-0">
         <LinearGradient
-          colors={["#0F0E17", "#1A1A2E", "#2D1B69", "#1A1A2E", "#0F0E17"]}
-          locations={[0, 0.25, 0.5, 0.75, 1]}
+          colors={["#140A00", "#2A1200", "#FF6A00", "#2A1200", "#140A00"]}
+          locations={[0, 0.22, 0.5, 0.78, 1]}
           style={{ width: "100%", height: "100%" }}
           start={{ x: 0.5, y: 0 }}
           end={{ x: 0.5, y: 1 }}
@@ -24,7 +24,7 @@ const AuthScreen = () => {
         <View>
           <View className="items-center pt-10 pb-2">
             <View className="w-16 h-16 rounded-[20px] bg-primary/15 items-center justify-center border border-primary/20">
-              <Ionicons name="school" size={30} color="#A29BFE" />
+              <Ionicons name="chatbubbles" size={30} color="#FFA24D" />
             </View>
 
             <Text className="text-3xl font-sans-bold text-foreground tracking-tight mt-4">YAPZO</Text>
@@ -36,8 +36,8 @@ const AuthScreen = () => {
 
           <View className="items-center px-6 mt-4">
             <Image
-              source={require("@/assets/images/auth.png")}
-              style={{ width: 300, height: 320 }}
+              source={require("@/assets/images/Yapzo_Auth.png")}
+              style={{ width: 280, height: 320 }}
               contentFit="cover"
             />
           </View>
@@ -52,7 +52,7 @@ const AuthScreen = () => {
               },
               {
                 icon: "chatbubbles" as const,
-                label: "Study Rooms",
+                label: "Messaging",
                 color: "#FF6B6B",
                 bg: "bg-accent/12 border-accent/20",
               },

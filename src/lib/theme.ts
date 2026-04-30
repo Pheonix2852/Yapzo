@@ -6,35 +6,35 @@ const vw = (percent: number) => (width * percent) / 100;
 
 // these colors are matching tailwind.config.js
 export const COLORS = {
-  primary: "#6C5CE7",
-  primaryDark: "#5A4BD1",
-  primaryLight: "#A29BFE",
-  primaryTransparent: "rgba(108, 92, 231, 0.5)",
+  primary: "#FF6A00",
+  primaryDark: "#E65C00",
+  primaryLight: "#FFA24D",
+  primaryTransparent: "rgba(255, 106, 0, 0.5)",
 
-  background: "#0F0E17",
-  surface: "#1A1A2E",
-  surfaceDark: "#0F0E17",
-  surfaceLight: "#16213E",
+  background: "#140A00",
+  surface: "#1F1208",
+  surfaceDark: "#140A00",
+  surfaceLight: "#2A180C",
 
-  text: "#FFFFFE",
-  textMuted: "#A7A9BE",
-  textSubtle: "#72757E",
+  text: "#FFF8F2",
+  textMuted: "#D9B8A0",
+  textSubtle: "#9A7B66",
 
-  border: "#232946",
-  borderLight: "#2E3354",
+  border: "#3A2414",
+  borderLight: "#4A2E1A",
 
-  success: "#00B894",
-  warning: "#FDCB6E",
-  danger: "#FF6B6B",
+  success: "#22C55E",
+  warning: "#F59E0B",
+  danger: "#FF5C5C",
 
-  active: "#6C5CE7",
+  active: "#FF6A00",
 
-  outgoingBubble: "#3D3580",
-  incomingBubble: "#1A1A2E",
-  chatBackground: "#0F0E17",
+  outgoingBubble: "#5A2E00",
+  incomingBubble: "#1F1208",
+  chatBackground: "#140A00",
 
-  accent: "#FF6B6B",
-  accentSecondary: "#00B894",
+  accent: "#FF8C42",
+  accentSecondary: "#FFC857",
 };
 
 export const yapzo: DeepPartial<Theme> = {
