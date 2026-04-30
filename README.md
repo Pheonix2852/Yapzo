@@ -25,6 +25,7 @@ Yapzo provides a mobile‑first platform where users can:
 - **Chat & Video**: Stream Chat SDK, Stream Video React Native SDK
 - **State Management**: React Context (`src/context/AppProvider.tsx`)
 - **Styling**: Tailwind CSS, custom theme (`src/lib/theme.ts`)
+- **Error Handling & Monitoring**: Sentry
 - **Build & Dev**: Expo CLI, Metro bundler, EAS for builds
 - **Testing / Linting**: ESLint, Jest
 - **Version Control**: Git
@@ -39,6 +40,7 @@ Yapzo provides a mobile‑first platform where users can:
 - **Video calling** with incoming/outgoing call screens and Stream Video integration.
 - **Themed UI** – custom orange palette defined in `src/lib/theme.ts` and applied across components.
 - **Responsive design** via NativeWind utilities.
+- **Real Time Error Capturing** via Sentry logger
 - **Hot‑reload friendly** development workflow (Expo Go, Metro bundler).
 
 ---
